@@ -10,19 +10,33 @@ const tabdata = [
         { screen:'other', title:"Other cells" },
 ]
 
+const binder = ( ndl='unknown', adata='null', bdata='null', cdata='null' )=>{ 
+
+	if( ndl == "imageselector" ){ 	// Image selector
+
+		console.log(adata);
+
+		//modAct( "507bd06d-3806-4e72-a8ed-514e09fc40b1", { payload:payload[screen], bindto:ndl, imgkey:adata } );
+
+        window.location = '/'+adata
+
+	 	return [] 
+	}
+	else if( ndl == "imageselectorleftcol" ){ 	// Image selector (leftcol)
+
+		console.log(adata);
+
+		//modAct( "b290a78d-4d92-4c2f-8f5c-6f8e9949c082", { payload:payload[screen], bindto:ndl, imgkey:adata } );
+
+        window.location = '/'
+
+	 	return [] 
+	}
+}
+
 const bindTo = (target,adata,edata,xdata)=>{ 
     
     let dorr = binder( target,adata,edata,xdata );
-
-    if( dorr.length > 0 ){
-
-        if( dorr[0] == "modact" ){
-            modAct( dorr[1], dorr[2], dorr[3], dorr[4] )
-        return true
-       
-        console.warn('bounDo: Unknown command')
-        return false
-    }
     
 }
 

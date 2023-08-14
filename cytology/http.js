@@ -7,7 +7,12 @@ const { getHtml, webpage } = require("htwrite");
 
 const xhead = require("./xhead");
 
+const MAIN_TITLE = "Cytology"
+
+const SERVER_PORT = 9000
+
 let screen = 'leucocytes';
+
 
 const imglink = { 'monocyte':'https://www.hematocell.fr/images/diaporama/diapositives/49/9.jpg', 
                   'eosinophile':'https://www.hematocell.fr/images/diaporama/diapositives/49/18.jpg',
@@ -30,23 +35,29 @@ const payload = {
         ]
 }
 
-let html = `<nav class="navbar navbar-dark bg-dark">
-            <span class="navbar-brand" href="#">Cytology</span>
-            <div id="tabs" class="navbar-text"></div>
-            </nav>
-            <div id="toptext" class="text-center my-4 fs-3">Normal blood cells</div>
-            <div id="htcont" class="container-fluid">${getHtml([
-                
-                [ "507bd06d-3806-4e72-a8ed-514e09fc40b1", 
-                { payload:payload[screen], bindto:"imageselectorleftcol", imgkey:payload[screen][0].key } ]
+function pageBody(navtext="NestedLogic",toptext="No title",htw){
 
-            ])}</div>
+    let html = `<nav class="navbar navbar-dark bg-dark">
+            <span class="navbar-brand mx-4" href="#">${navtext}</span>
+            <div id="tabs" class="navbar-text">${Object.keys(payload).map((pg)=>{
+
+                return `<span data-bindto="imageselector" data-func="click" data-aval="${pg}" class="mx-3 text-white">${pg}</span>`
+
+            }).join('')}</div>
+            </nav>
+            <div id="toptext" class="text-center my-4 fs-3">${toptext}</div>
+            <div id="htcont" class="container-fluid">${htw}</div>
             <script>
                 window.onload = (event) => {
                     
-                    initLoad();
+                    listeners();
                 };
             </script>`
+
+    return html;
+}
+
+
 
 // Make our HTTP server
 const server = http.createServer((req, res) => {
@@ -57,11 +68,36 @@ const server = http.createServer((req, res) => {
 
     if (req.method == "GET") {
 
-        if (reqUrl == "/") {
+        if (reqUrl == "/" || reqUrl == "/leucocytes") {
 
-            res.write( webpage("Cytology",xhead,html) )
+            screen = 'leucocytes'
+
+            let mhtml = getHtml([
+                
+                [ "507bd06d-3806-4e72-a8ed-514e09fc40b1", 
+                { payload:payload[screen], bindto:"imageselectorleftcol", imgkey:payload[screen][0].key } ]
+
+            ])
+
+            res.write( webpage("Cytology",xhead,pageBody(MAIN_TITLE,"Normal Leucocytes",mhtml)) )
             res.end()
         }
+        else if (reqUrl == "/other") {
+
+            screen = 'other'
+
+            let mhtml = getHtml([
+                
+                [ "507bd06d-3806-4e72-a8ed-514e09fc40b1", 
+                { payload:payload[screen], bindto:"imageselectorleftcol", imgkey:payload[screen][0].key } ]
+
+            ])
+
+            res.write( webpage("Cytology",xhead,pageBody(MAIN_TITLE,"Other cells",mhtml)) )
+            res.end()
+        }
+
+
     } else if (req.method == "POST") {
 
         if (reqUrl == "/hello") {
@@ -73,4 +109,6 @@ const server = http.createServer((req, res) => {
 })
 
 // Have the server listen on port 9000
-server.listen(9000)
+server.listen(SERVER_PORT)
+
+console.log(`server started at: http://localhost:${SERVER_PORT}`)
