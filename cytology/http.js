@@ -11,8 +11,6 @@ const MAIN_TITLE = "Cytology"
 
 const SERVER_PORT = 9000
 
-let screen = 'leucocytes';
-
 const { payload } = require('./content')
 
 function pageBody(navtext="NestedLogic",toptext="No title",htw){
@@ -41,9 +39,8 @@ function pageBody(navtext="NestedLogic",toptext="No title",htw){
 
 // Make our HTTP server
 const server = http.createServer((req, res) => {
-    // Parse the request url
 
-    //const parsed = url.parse(req.url, true)
+    //const parsed = url.parse(req.url, true)       // Deprecated
 
     const pgurl = new URL('http://localhost'+req.url)
 
@@ -51,15 +48,11 @@ const server = http.createServer((req, res) => {
 
     const reqUrl = pgurl.pathname
 
-    // Compare our request method
-
     const params = pgurl.searchParams
 
-    //console.log(qry)
+    let screen = 'leucocytes';
 
-    const cell = params.get('cell') || payload[screen][0].key    //( qry.hasOwnProperty('cell') ) ? qry.cell : payload[screen][0].key;
-
-    console.log(cell)
+    let cell
 
     if (req.method == "GET") {
 
@@ -68,7 +61,7 @@ const server = http.createServer((req, res) => {
 
             screen = 'leucocytes'
 
-            
+                cell = params.get('cell') || payload[screen][0].key 
 
                 let mhtml = getHtml([
                     

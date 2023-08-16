@@ -24,11 +24,15 @@ const binder = ( ndl='unknown', adata='null', bdata='null', cdata='null' )=>{
 	}
 	else if( ndl == "imageselectorleftcol" ){ 	// Image selector (leftcol)
 
-		console.log(adata);
+		//console.log(adata);
 
-		//modAct( "b290a78d-4d92-4c2f-8f5c-6f8e9949c082", { payload:payload[screen], bindto:ndl, imgkey:adata } );
+		let pgurl = new URL(window.location.href)
 
-        window.location = '/'
+        pgurl.searchParams.set('cell',adata)
+
+        console.log(pgurl.href);
+
+        window.location = pgurl.href
 
 	 	return [] 
 	}
