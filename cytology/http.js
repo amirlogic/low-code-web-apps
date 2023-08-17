@@ -65,7 +65,7 @@ const server = http.createServer((req, res) => {
 
                 let mhtml = getHtml([
                     
-                    [ "507bd06d-3806-4e72-a8ed-514e09fc40b1", 
+                    [ "b290a78d-4d92-4c2f-8f5c-6f8e9949c082", 
                     { payload:payload[screen], bindto:"imageselectorleftcol", imgkey:cell } ]
 
                 ])
@@ -96,7 +96,7 @@ const server = http.createServer((req, res) => {
 
             let mhtml = getHtml([
                 
-                [ "507bd06d-3806-4e72-a8ed-514e09fc40b1", 
+                [ "b290a78d-4d92-4c2f-8f5c-6f8e9949c082", 
                 { payload:payload[screen], bindto:"imageselectorleftcol", imgkey:payload[screen][0].key } ]
 
             ])
