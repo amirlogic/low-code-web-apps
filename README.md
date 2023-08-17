@@ -9,5 +9,7 @@ The easiest way to run the apps is to use CodeSandbox.io
 
 ## Usage
 
+You have to run `npm install` one time, after cloning the repo. It will only install one single dependency.
+
 Cytology: `npm run cytology`
 
