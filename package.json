@@ -1,11 +1,12 @@
 {
   "name": "low-code-web-apps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Low Code Web Applications",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cytology": "node cytology/http.js"
+    "cytology": "node cytology/http.js",
+    "dataviz": "node dataviz/http.js"
   },
   "repository": {
     "type": "git",
